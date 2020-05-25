@@ -1,0 +1,8 @@
+# FROM cudabase-dev
+FROM python:3
+
+ADD /face_detector/face_detector.py /
+
+RUN pip install opencv-python
+
+CMD [ "python", "face_detector.py" ]
