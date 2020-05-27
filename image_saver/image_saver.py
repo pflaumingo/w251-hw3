@@ -9,7 +9,7 @@
 import paho.mqtt.client as mqtt
 import sys
 
-REMOTE_MQTT_HOST="remote_broker"
+REMOTE_MQTT_HOST="remote-broker"
 REMOTE_MQTT_PORT=1883
 REMOTE_MQTT_TOPIC="remote_facial_images"
 
