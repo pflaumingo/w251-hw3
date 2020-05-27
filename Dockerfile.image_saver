@@ -1,4 +1,4 @@
 FROM ubuntu:18.04
 
 RUN sudo apt update
-RUN sudo apt install python-opencv
+RUN sudo apt install python python-pip
