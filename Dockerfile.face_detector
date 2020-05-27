@@ -1,8 +1,35 @@
 # FROM cudabase-dev
-FROM python:3
+FROM w251/cuda:dev-tx2-4.3_b132
 
-ADD /face_detector/face_detector.py /
+ARG URL=http://169.44.201.108:7002/jetpacks/4.3
 
-RUN pip install opencv-python
+RUN apt-get update && apt install -y git pkg-config wget build-essential cmake unzip
+
+
+WORKDIR /tmp
+# RUN rm *.deb
+
+RUN curl $URL/libopencv_3.3.1-2-g31ccdfe11_arm64.deb  -so libopencv_3.3.1-2-g31ccdfe11_arm64.deb
+RUN curl $URL/libopencv-dev_3.3.1-2-g31ccdfe11_arm64.deb -so libopencv-dev_3.3.1-2-g31ccdfe11_arm64.deb
+RUN curl $URL/libopencv-python_3.3.1-2-g31ccdfe11_arm64.deb -so libopencv-python_3.3.1-2-g31ccdfe11_arm64.deb
+
+RUN apt remove -y libopencv-calib3d-dev libopencv-core-dev 
+
+RUN apt install -y  libtbb-dev libavcodec-dev libavformat-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgtk2.0-dev
+RUN apt install -y libswscale-dev libv4l-dev
+RUN dpkg -i *.deb
+
+
+
+RUN apt install -y libcanberra-gtk-module libcanberra-gtk3-module libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev 
+
+RUN apt-get install python-pip -y
+RUN pip install --upgrade pip
+RUN pip install numpy
+RUN pip install paho-mqtt
+
+WORKDIR /face_detector
+
+ADD face_detector/face_detector.py /face_detector
 
 CMD [ "python", "face_detector.py" ]
